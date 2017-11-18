@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Button> board = new ArrayList<Button>();
 
     private TextView currentTV;
-    private TextView playerTV;
 
     private String player;
     private boolean goingOn;
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.buttonReset).setOnClickListener(resetListener);
 
         this.currentTV = (TextView) findViewById(R.id.currentTV);
-        this.playerTV = (TextView) findViewById(R.id.playerTV);
         this.player = "X";
         this.goingOn = true;
     }
@@ -84,13 +82,11 @@ public class MainActivity extends AppCompatActivity {
                     goingOn = false;
                     currentTV.setText("THE WINNER IS " + player + "!");
                     currentTV.setTextSize(30);
-                    playerTV.setText("");
                 }else{
                     if(checkDraw()){
                         goingOn = false;
                         currentTV.setText("THE GAME IS A DRAW!");
                         currentTV.setTextSize(30);
-                        playerTV.setText("");
                     }
                     else {
                         toggleCurrent();
@@ -103,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             goingOn = true;
             player = "X";
-            currentTV.setText("CURRENT PLAYER");
-            playerTV.setText("X");
+            currentTV.setText("CURRENT PLAYER IS X");
             bttn1.setText("");
             bttn2.setText("");
             bttn3.setText("");
@@ -116,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             bttn9.setText("");
             for(int i=0; i<board.size(); i++){
                 board.get(i).setTextColor(Color.BLACK);
+                board.get(i).setTextSize(40);
             }
             currentTV.setTextSize(20);
         }};
@@ -133,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 this.player = "X";
                 break;
         }
-        this.playerTV.setText(this.player);
+        this.currentTV.setText("CURRENT PLAYER IS " + this.player);
     }
 
     private boolean checkVictory(){
@@ -172,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
                     this.board.get(one).setTextColor(Color.BLUE);
                     this.board.get(two).setTextColor(Color.BLUE);
                     this.board.get(three).setTextColor(Color.BLUE);
+                    this.board.get(one).setTextSize(50);
+                    this.board.get(two).setTextSize(50);
+                    this.board.get(three).setTextSize(50);
                     return true;
                 }
             }else{
