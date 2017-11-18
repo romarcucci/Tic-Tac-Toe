@@ -163,18 +163,49 @@
         </TableRow>
     </TableLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tableLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/textView3" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Turn"
+        android:id="@+id/buttonResetTurn"
+        android:background="@color/lightGray"
+        android:textColor="@color/black"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:layout_alignTop="@+id/buttonResetGame"
+        android:layout_alignStart="@+id/tableLayout" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reset Game"
-        android:id="@+id/buttonReset"
+        android:id="@+id/buttonResetGame"
         android:background="@color/lightGray"
         android:textColor="@color/black"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dip" />
-
+        android:layout_alignEnd="@+id/tableLayout" />
 
 </RelativeLayout>
