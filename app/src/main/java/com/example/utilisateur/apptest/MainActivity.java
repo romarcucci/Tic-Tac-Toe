@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private int oScore;
     private int xScore;
 
+    private int count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         this.player = "X";
 
         this.goingOn = true;
+
+        this.count = 1;
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
@@ -98,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
                     if(player.equals("X")) xScore++; xScoreTV.setText("X : " + xScore);
                     if(player.equals("O")) oScore++; oScoreTV.setText("O : " + oScore);
-
+                    count++;
                     setScoreColors();
                 }else {
                     if (checkDraw()) {
                         goingOn = false;
                         currentTV.setText("THE GAME IS A DRAW!");
-
+                        count++;
                         setScoreColors();
                     } else {
                         toggleCurrent();
@@ -117,8 +121,14 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener resetTurnListener = new View.OnClickListener() {
         public void onClick(View v) {
             goingOn = true;
-            player = "X";
-            currentTV.setText("CURRENT PLAYER IS X");
+            if(count%2 == 0){
+                player = "O";
+                currentTV.setText("CURRENT PLAYER IS O");
+            }
+            else {
+                player = "X";
+                currentTV.setText("CURRENT PLAYER IS X");
+            }
             bttn1.setText("");
             bttn2.setText("");
             bttn3.setText("");
@@ -157,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             oScoreTV.setText("O : 0");
             xScoreTV.setTextColor(Color.GRAY);
             oScoreTV.setTextColor(Color.GRAY);
+            count = 1;
         }
     };
 
