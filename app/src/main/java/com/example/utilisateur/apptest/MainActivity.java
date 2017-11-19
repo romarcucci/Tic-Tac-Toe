@@ -23,13 +23,17 @@ public class MainActivity extends AppCompatActivity {
     private Button bttn8;
     private Button bttn9;
 
-
-    ArrayList<Button> board = new ArrayList<Button>();
+    ArrayList<Button> board = new ArrayList<>();
 
     private TextView currentTV;
+    private TextView oScoreTV;
+    private TextView xScoreTV;
 
     private String player;
     private boolean goingOn;
+
+    private int oScore;
+    private int xScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,35 +71,50 @@ public class MainActivity extends AppCompatActivity {
         this.board.add(this.bttn8);
         this.board.add(this.bttn9);
 
-        findViewById(R.id.buttonReset).setOnClickListener(resetListener);
+        this.oScoreTV = (TextView) findViewById(R.id.oScoreTV);
+        this.xScoreTV = (TextView) findViewById(R.id.xScoreTV);
+        this.xScoreTV.setTextColor(Color.GRAY);
+        this.oScoreTV.setTextColor(Color.GRAY);
+
+        this.oScore = 0;
+        this.xScore = 0;
+
+        findViewById(R.id.buttonResetTurn).setOnClickListener(resetTurnListener);
+        findViewById(R.id.buttonResetGame).setOnClickListener(resetGameListener);
 
         this.currentTV = (TextView) findViewById(R.id.currentTV);
         this.player = "X";
+
         this.goingOn = true;
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         public void onClick(View v) {
             if(goingOn == true && ((Button) v).getText().equals("")){
-                setButtonText(v);
+                ((Button) v).setText(player);
                 if(checkVictory()){
                     goingOn = false;
                     currentTV.setText("THE WINNER IS " + player + "!");
-                    currentTV.setTextSize(30);
-                }else{
-                    if(checkDraw()){
+
+                    if(player.equals("X")) xScore++; xScoreTV.setText("X : " + xScore);
+                    if(player.equals("O")) oScore++; oScoreTV.setText("O : " + oScore);
+
+                    setScoreColors();
+                }else {
+                    if (checkDraw()) {
                         goingOn = false;
                         currentTV.setText("THE GAME IS A DRAW!");
-                        currentTV.setTextSize(30);
-                    }
-                    else {
+
+                        setScoreColors();
+                    } else {
                         toggleCurrent();
                     }
                 }
             }
-    }};
+        }
+    };
 
-    View.OnClickListener resetListener = new View.OnClickListener() {
+    View.OnClickListener resetTurnListener = new View.OnClickListener() {
         public void onClick(View v) {
             goingOn = true;
             player = "X";
@@ -111,13 +130,50 @@ public class MainActivity extends AppCompatActivity {
             bttn9.setText("");
             for(int i=0; i<board.size(); i++){
                 board.get(i).setTextColor(Color.BLACK);
-                board.get(i).setTextSize(40);
             }
-            currentTV.setTextSize(20);
-        }};
+        }
+    };
 
-    private void setButtonText(View v){
-        ((Button) v).setText(this.player);
+    View.OnClickListener resetGameListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            goingOn = true;
+            player = "X";
+            currentTV.setText("CURRENT PLAYER IS X");
+            bttn1.setText("");
+            bttn2.setText("");
+            bttn3.setText("");
+            bttn4.setText("");
+            bttn5.setText("");
+            bttn6.setText("");
+            bttn7.setText("");
+            bttn8.setText("");
+            bttn9.setText("");
+            for(int i=0; i<board.size(); i++){
+                board.get(i).setTextColor(Color.BLACK);
+            }
+            oScore = 0;
+            xScore = 0;
+            xScoreTV.setText("X : 0");
+            oScoreTV.setText("O : 0");
+            xScoreTV.setTextColor(Color.GRAY);
+            oScoreTV.setTextColor(Color.GRAY);
+        }
+    };
+
+
+    private void setScoreColors(){
+        if(this.xScore == this.oScore){
+            xScoreTV.setTextColor(Color.GRAY);
+            oScoreTV.setTextColor(Color.GRAY);
+        }
+        if(this.xScore < this.oScore){
+            xScoreTV.setTextColor(Color.LTGRAY);
+            oScoreTV.setTextColor(Color.BLACK);
+        }
+        if(this.xScore > this.oScore){
+            xScoreTV.setTextColor(Color.BLACK);
+            oScoreTV.setTextColor(Color.LTGRAY);
+        }
     }
 
     private void toggleCurrent(){
@@ -161,16 +217,14 @@ public class MainActivity extends AppCompatActivity {
             if(this.board.get(two).getText().equals(this.board.get(three).getText())){
                 if(this.board.get(one).getText().equals("")){
                     return false;
-                }else {
+                }
+                else{
                     for(int i=0; i<this.board.size(); i++){
                         this.board.get(i).setTextColor(Color.LTGRAY);
                     }
                     this.board.get(one).setTextColor(Color.BLUE);
                     this.board.get(two).setTextColor(Color.BLUE);
                     this.board.get(three).setTextColor(Color.BLUE);
-                    this.board.get(one).setTextSize(50);
-                    this.board.get(two).setTextSize(50);
-                    this.board.get(three).setTextSize(50);
                     return true;
                 }
             }else{
